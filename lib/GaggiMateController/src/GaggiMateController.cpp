@@ -1,4 +1,5 @@
 #include "GaggiMateController.h"
+#include "ControllerConfig.h"
 #include "utilities.h"
 #include <Arduino.h>
 #include <freertos/FreeRTOS.h>
@@ -163,6 +164,10 @@ void GaggiMateController::loop() {
 void GaggiMateController::registerBoardConfig(ControllerConfig config) { configs.push_back(config); }
 
 void GaggiMateController::detectBoard() {
+    _config = GB_V_1;
+    ESP_LOGI(LOG_TAG, "Using Board: %s", _config.name.c_str());
+    return;
+
     pinMode(DETECT_EN_PIN, OUTPUT);
     pinMode(DETECT_VALUE_PIN, INPUT_PULLDOWN);
     digitalWrite(DETECT_EN_PIN, HIGH);

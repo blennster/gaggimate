@@ -149,6 +149,41 @@ const ControllerConfig GM_PRO_REV_1x = {.name = "GaggiMate Pro Rev 1.x",
                                             .tof = false,
                                         }};
 
+const ControllerConfig GB_V_1 = {.name = "GaggiBro V1",
+                                 .autodetectValue = 0, // Voltage divider was missing in Rev 1.0 so it's 0
+                                 .heaterPin = 14,
+                                 .pumpPin = 9,
+                                 .pumpSensePin = 47, // Original is 21
+                                 .pumpOn = 1,
+                                 .valvePin = 10,
+                                 .valveOn = 1,
+                                 .altPin = 21, // Original is 47
+                                 .altOn = 1,
+                                 .pressureScl = 41,
+                                 .pressureSda = 42,
+                                 .maxSckPin = 6,
+                                 .maxCsPin = 4,   // Original is 7
+                                 .maxMisoPin = 7, // Original is 4
+                                 .brewButtonPin = 38,
+                                 .steamButtonPin = 48,
+                                 .scaleSclPin = 17,
+                                 .scaleSdaPin = 18,
+                                 .scaleSda1Pin = 39,
+                                 .sunriseSclPin = 44,
+                                 .sunriseSdaPin = 43,
+                                 .ext1Pin = 1,
+                                 .ext2Pin = 2,
+                                 .ext3Pin = 8,
+                                 .ext4Pin = 12,
+                                 .ext5Pin = 13,
+                                 .capabilites = {
+                                     .dimming = false, // Missing phase detection for now
+                                     .pressure = true, // false
+                                     .ssrPump = true,  // true
+                                     .ledControls = false,
+                                     .tof = false,
+                                 }};
+
 const ControllerConfig GM_PRO_LEGO = {.name = "GaggiMate Pro Lego Build",
                                       .autodetectValue = 3,
                                       .heaterPin = 14,
