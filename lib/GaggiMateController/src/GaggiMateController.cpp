@@ -1,4 +1,5 @@
 #include "GaggiMateController.h"
+#include "ControllerConfig.h"
 #include "utilities.h"
 #include <Arduino.h>
 #include <freertos/FreeRTOS.h>
@@ -139,6 +140,10 @@ void GaggiMateController::loop() {
 void GaggiMateController::registerBoardConfig(ControllerConfig config) { configs.push_back(config); }
 
 void GaggiMateController::detectBoard() {
+    _config = GB_V_1;
+    ESP_LOGI(LOG_TAG, "Using Board: %s", _config.name.c_str());
+    return;
+
     pinMode(DETECT_EN_PIN, OUTPUT);
     pinMode(DETECT_VALUE_PIN, INPUT_PULLDOWN);
     digitalWrite(DETECT_EN_PIN, HIGH);
@@ -182,12 +187,20 @@ void GaggiMateController::thermalRunawayShutdown() {
 }
 
 void GaggiMateController::sendSensorData() {
+    float temp = 0, pressure = 0, puckFlow = 0, pumpFlow = 0, puckResistance = 0;
+
+    temp = this->thermocouple->read();
+
     if (_config.capabilites.pressure) {
-        auto dimmedPump = static_cast<DimmedPump *>(pump);
-        _ble.sendSensorData(this->thermocouple->read(), this->pressureSensor->getPressure(), dimmedPump->getPuckFlow(),
-                            dimmedPump->getPumpFlow(), dimmedPump->getPuckResistance());
-        _ble.sendVolumetricMeasurement(dimmedPump->getCoffeeVolume());
-    } else {
-        _ble.sendSensorData(this->thermocouple->read(), 0.0f, 0.0f, 0.0f, 0.0f);
+        pressure = this->pressureSensor->getPressure();
     }
+    if (_config.capabilites.dimming) {
+        auto dimmedPump = static_cast<DimmedPump *>(pump);
+        float coffeeVolume = dimmedPump->getCoffeeVolume();
+        puckFlow = dimmedPump->getPuckFlow();
+        pumpFlow = dimmedPump->getPumpFlow();
+        puckResistance = dimmedPump->getPuckResistance();
+        _ble.sendVolumetricMeasurement(coffeeVolume);
+    }
+    _ble.sendSensorData(temp, pressure, puckFlow, pumpFlow, puckResistance);
 }
