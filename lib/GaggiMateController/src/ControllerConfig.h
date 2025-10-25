@@ -152,10 +152,10 @@ const ControllerConfig GM_PRO_REV_1x = {.name = "GaggiMate Pro Rev 1.x",
 const ControllerConfig GB_V_1 = {.name = "GaggiBro V1",
                                  .autodetectValue = 0, // Voltage divider was missing in Rev 1.0 so it's 0
                                  .heaterPin = 14,
-                                 .pumpPin = 9,
+                                 .pumpPin = 9,       // Original is 9
                                  .pumpSensePin = 47, // Original is 21
                                  .pumpOn = 1,
-                                 .valvePin = 10,
+                                 .valvePin = 10, // Original is 10
                                  .valveOn = 1,
                                  .altPin = 21, // Original is 47
                                  .altOn = 1,
@@ -177,9 +177,9 @@ const ControllerConfig GB_V_1 = {.name = "GaggiBro V1",
                                  .ext4Pin = 12,
                                  .ext5Pin = 13,
                                  .capabilites = {
-                                     .dimming = false, // Missing phase detection for now
+                                     .dimming = true,  // Missing phase detection for now
                                      .pressure = true, // false
-                                     .ssrPump = true,  // true
+                                     .ssrPump = false, // true
                                      .ledControls = false,
                                      .tof = false,
                                  }};
