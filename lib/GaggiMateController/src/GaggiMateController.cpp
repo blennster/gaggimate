@@ -164,7 +164,7 @@ void GaggiMateController::loop() {
 void GaggiMateController::registerBoardConfig(ControllerConfig config) { configs.push_back(config); }
 
 void GaggiMateController::detectBoard() {
-    _config = GB_V_1;
+    _config = GB_V_2;
     ESP_LOGI(LOG_TAG, "Using Board: %s", _config.name.c_str());
     return;
 
